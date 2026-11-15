@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
 public class SwarmRP extends LinearOpMode {
-    private Servo PositionalRampServo;
+    private Servo LinearServo;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -18,16 +18,11 @@ public class SwarmRP extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-        DcMotor intakeWheel = hardwareMap.dcMotor.get("Intake_Wheel");
-        DcMotor flywheel = hardwareMap.dcMotor.get("Flywheel");
-        double servo_position = 0.5;
-        PositionalRampServo = hardwareMap.get(Servo.class, "PositionalRampServo");
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         backLeftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
 
         frontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         backLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -35,15 +30,20 @@ public class SwarmRP extends LinearOpMode {
         backRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         waitForStart();
-        frontLeftMotor.setPower(.52);
-        backLeftMotor.setPower(.52);
-        //Temp to stop veering on Right
+        frontLeftMotor.setPower(.50);
+        backLeftMotor.setPower(.50);
         backRightMotor.setPower(.5);
         frontRightMotor.setPower(.5);
-        sleep(1000);
+        sleep(600);
         frontLeftMotor.setPower(0);
         backLeftMotor.setPower(0);
         backRightMotor.setPower(0);
         frontRightMotor.setPower(0);
+        sleep(300);
+        frontLeftMotor.setPower(-.5);
+        backLeftMotor.setPower(.5);
+        backRightMotor.setPower(-.5);
+        frontRightMotor.setPower(.5);
+        sleep(200);
     }
 }

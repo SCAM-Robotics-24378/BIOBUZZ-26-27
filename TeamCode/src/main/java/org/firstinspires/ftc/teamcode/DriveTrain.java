@@ -16,10 +16,11 @@ public class DriveTrain extends LinearOpMode {
         DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeftMotor");
         DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRightMotor");
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRightMotor");
-        DcMotor intakeWheel = hardwareMap.dcMotor.get("Intake_Wheel");
+        DcMotor intakeWheel = hardwareMap.dcMotor.get("left_IntakeMotor");
         DcMotor flywheel = hardwareMap.dcMotor.get("Flywheel");
         double servo_position = 0.5;
-        PositionalRampServo = hardwareMap.get(Servo.class, "PositionalRampServo");
+        Servo Kicker = hardwareMap.get(Servo.class, "Fliper");
+        Servo LinearServo = hardwareMap.get(Servo.class, "LinearServo");
 
         frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         backLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -61,18 +62,22 @@ public class DriveTrain extends LinearOpMode {
                 sleep(300); // Debouncing delay
             }
             servo_position = Range.clip(servo_position, 0.0, 1.0);
-            PositionalRampServo.setPosition(servo_position);
+            LinearServo.setPosition(servo_position);
 
-            if (gamepad1.a)
+            if (gamepad1.left_bumper)
                 intakeWheel.setPower(1);
             else
                 intakeWheel.setPower(0);
 
-            if (gamepad1.left_trigger_pressed)
+            if (gamepad1.right_trigger_pressed)
                 flywheel.setPower(1);
             else
                 flywheel.setPower(0);
 
+            if (gamepad1.square)
+                LinearServo.setPosition(0.32);
+            else
+                LinearServo.setPosition(0.2);
         }
     }
 }
